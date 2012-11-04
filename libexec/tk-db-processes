@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Usage: Shows database process list
+# Summary: Shows an updated list of database processes every 2 seconds
+
+set -e
+
+# Provide tk completions
+if [ "$1" = "--complete" ]; then
+  tk config databases
+  exit
+fi
+
+# Get commands
+mysql=$(eval tk config commands mysql)
+
+# Get connection info
+ip=$(eval tk config databases $1 ip)
+user=$(eval tk config databases $1 user)
+pass=$(eval tk config databases $1 pass)
+
+# Watch database processes
+watch -t $mysql -u $user -h $ip -p$pass -e "'SHOW PROCESSLIST'"
