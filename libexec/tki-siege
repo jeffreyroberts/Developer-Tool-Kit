@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Usage: tk ip
+# Summary: Show the current IP
+# Help: This command will show you the current external IP
+
+# Move to the tmp directory
+cd $_TKI_ROOT/tmp
+
+# Get latest package
+curl -C - -O http://www.joedog.org/pub/siege/siege-latest.tar.gz
+
+# Decompress
+tar -xvf siege-latest.tar.gz
+
+# Move into directory
+cd siege-*
+
+# Configure, make and install
+./configure
+make
+make install
+
+# Clean up
+siege_dir=pwd
+cd $_TKI_ROOT;
+rm -rf $siege_dir
+rm -rf siege-latest.tar.gz
