@@ -6,30 +6,51 @@
 // Bootstrap!
 require($_ENV['_TK_ROOT'] .'/share/init.php');
 
-// Try to parse out args
-$return = config();
-unset($argv[0]);
-foreach($argv as $arg)
-{
-	// If the var doesn't exist just return empty string
-	if(!isset($return[$arg]))
-		return '';
+// Get params
+$params = $argv;
+unset($params[0]);
 
-	// Drill down
-	$return = $return[$arg];
-}
+// Show config
+echo get_config_by_params($params);
 
-// Show everything that's not an array
-if(!is_array($return))
-{
-	echo $return . PHP_EOL;
-}
 
-// Show array keys
-if(is_array($return))
+
+/**
+ * Gets config items by space-deliminated list of paramaters
+ *
+ * @return string
+ * @author Jake A. Smith
+ **/
+function get_config_by_params($params)
 {
-	foreach(array_keys($return) as $key)
+	// Default return empty string
+	$return = '';
+
+	$config = config();
+	foreach($params as $arg)
 	{
-		echo $key . PHP_EOL;
+		// If the var doesn't exist just return empty string
+		if(!isset($config[$arg]))
+			return $return;
+
+		// Drill down
+		$config = $config[$arg];
 	}
+
+	// Show everything that's not an array
+	if(!is_array($config))
+	{
+		$return = $config . PHP_EOL;
+	}
+
+	// Show array keys
+	if(is_array($config))
+	{
+		foreach(array_keys($config) as $key)
+		{
+			$return .= $key . PHP_EOL;
+		}
+	}
+
+	return $return;
 }
