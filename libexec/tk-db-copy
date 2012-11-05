@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Usage: tk db-copy [server source] [server destination] [database name]
-# Summary: Copys a database from one server to another
+# Summary: Copies a database from one server to another
 
 # Ensure we have all the vars
 database_source=$(eval tk config databases $1)
