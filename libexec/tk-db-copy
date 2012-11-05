@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: tk db-copy [server source] [server destination] [database name]
+# Usage: tk db-copy [source server] [destination server] [database name]
 # Summary: Copies a database from one server to another
 
 # Ensure we have all the vars

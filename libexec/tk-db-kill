@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Usage: Kills a database process by id
+# Usage: tk db-kill [process id]
+# Summary: Kills a database process by id
 
 set -e
 

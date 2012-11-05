@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# Usage: tk ip
-# Summary: Show the current IP
-# Help: This command will show you the current external IP
+# Usage: tki siege
+# Summary: Installs the latest version of siege
 
 # Move to the tmp directory
 cd $_TKI_ROOT/tmp
