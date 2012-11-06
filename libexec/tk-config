@@ -4,7 +4,8 @@
 # Summary: Accesses config variables
 
 // Bootstrap!
-require($_ENV['_TK_ROOT'] .'/share/init.php');
+require(getenv('_TK_ROOT') .'/share/init.php');
+// require($_ENV['_TK_ROOT'] .'/share/init.php');
 
 // Get params
 $params = $argv;
