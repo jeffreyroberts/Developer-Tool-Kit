@@ -1,6 +1,6 @@
 <?php
 
-define('_TK_ROOT', $_ENV['_TK_ROOT']);
+define('_TK_ROOT', getenv('_TK_ROOT'));
 
 // Grab required files for parsing YAML config
 require(_TK_ROOT .'/library/yaml-parser/Yaml.php');
@@ -14,7 +14,7 @@ require(_TK_ROOT .'/library/yaml-parser/Exception/ParseException.php');
 
 
 /**
- * Gets the config array 
+ * Gets the config array
  *
  * @return array
  * @author Jake A. Smith
@@ -50,7 +50,7 @@ function config()
 function array_merge_multi_dimension() {
     $params = & func_get_args();
     $merged = array_shift($params); // using 1st array as base
- 
+
     foreach ($params as $array) {
         foreach ($array as $key => $value) {
             if (isset($merged[$key]) && is_array($value) && is_array($merged[$key]))
