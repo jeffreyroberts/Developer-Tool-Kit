@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Usage: tk scan [url]
+# Summary: 
+# Help: Thanks to Alain Kelder @url http://giantdorks.org/alain/little-shell-script-to-recursively-check-a-site-for-broken-links/
+ 
+set -e
+
+# error handling
+function err_exit { echo -e 1>&2; exit 1; }
+ 
+# check if proper arguments are supplied
+if [ $# -ne 1 ]; then
+    tk help scan
+    exit 1
+fi
+ 
+# normalize url for log name
+# url=$(echo $1 | 's_https?://__;s/www\.//;s_/_._g;s/\.+/\./g;s/\.$//')
+url=$(echo $1)
+ 
+# remove log if exists
+if [ -f $_TK_ROOT/tmp/$url.log ]; then
+    echo "Removing existing log.."
+    rm $_TK_ROOT/tmp/$url.log || err_exit
+fi
+ 
+wget --spider -r $1 &> $_TK_ROOT/tmp/$url.log || err_exit &
+ 
+while [ $(pgrep -l -f $url | grep wget | wc -l) != 0 ]; do
+    sleep 3
+    total=$(grep "HTTP request sent" $_TK_ROOT/tmp/$url.log | wc -l)
+    echo "$total URLs checked thus far"
+done
+ 
+echo -e "\nAll done, calculating response codes.."
+echo -e "\nResponse counts, sorted by HTTP code"
+grep "^HTTP" $_TK_ROOT/tmp/$url.log | awk '{print$6}' | sort | uniq -c | sort -nr || err_exit
+grep "^HTTP" www.v2cigs.com.log | awk '{print$6}' | sort | uniq -c | sort -nr || err_exit
