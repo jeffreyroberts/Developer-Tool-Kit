@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Usage: tk scan [url]
+# Summary: Scans a given site for 404s
+# Help: Thanks to Alain Kelder @url http://giantdorks.org/alain/little-shell-script-to-recursively-check-a-site-for-broken-links/
+
+set -e
+
+# error handling
+function err_exit { echo -e 1>&2; exit 1; }
+
+# check if proper arguments are supplied
+if [ $# -ne 1 ]; then
+    tk help scan
+    exit 1
+fi
+
+# normalize url for log name
+# url=$(echo $1 | 's_https?://__;s/www\.//;s_/_._g;s/\.+/\./g;s/\.$//')
+url=$(echo $1)
+logfile=$url.log
+logdir=$_TK_ROOT/var/tmp/scan
+logpath="$logdir/$logfile"
+
+# Move to tmp dir
+cd $logdir
+
+# remove log if exists
+if [ -f $logpath ]; then
+    echo "Removing existing log.."
+    rm $logpath || err_exit
+fi
+
+# Verify dir exists
+mkdir -p $logdir
+
+# Begin the magic
+wget --spider -r $1 &> $logpath || err_exit &
+while [ $(pgrep -l -f $url | grep wget | wc -l) != 0 ]; do
+    sleep 3
+    total=$(grep "HTTP request sent" $(echo "$logpath") | wc -l)
+    echo "$total URLs checked thus far"
+done
+
+# Clean up domain dir
+rm -rf $url
+
+# Spit out stats
+echo -e "\nAll done, calculating response codes.."
+echo -e "\nResponse counts, sorted by HTTP code"
+grep "^HTTP" $logpath | awk '{print$6}' | sort | uniq -c | sort -nr || err_exit
