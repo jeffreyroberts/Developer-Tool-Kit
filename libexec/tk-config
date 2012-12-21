@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 # Usage: tk config
-# Summary: Returns setting and config variables
+# Summary: Returns configuration variables
 
 // Bootstrap!
 require(getenv('_TK_ROOT') .'/etc/init.php');
