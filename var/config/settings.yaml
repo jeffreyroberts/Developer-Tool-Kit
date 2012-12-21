@@ -9,3 +9,7 @@ commands:
   mysqldump: /usr/local/mysql/bin/mysqldump
 
 editor: 'nano -w'
+
+campfire:
+	token: example
+	room: example

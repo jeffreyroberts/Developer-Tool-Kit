@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Usage: tk campfire [message]
+# Summary: Sends a message to campfire
+
+set -e
+
+if [ -z "$1" ]; then
+    # $1 is empty use standard input
+    message=`cat /dev/stdin`
+else
+    # Use the first param
+    message=$1
+fi
+
+token=$(tk config campfire token)
+room=$(tk config campfire room)
+
+if [ "$token" = "example" -o "$room" = "example" ]; then
+	echo "Oops! You need to add your campfire credentials first."
+	exit 0
+fi;
+
+curl -s -u $token:X -H 'Content-Type: application/xml' \
+-d "<message><body>$message</body></message>" https://v2cigs.campfirenow.com/room/$room/speak.xml > /dev/null
+
+exit 0
