@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# Usage: tk ip
-# Summary: Show the current IP
-# Help: This command will show you the current external IP
-
-curl ifconfig.me/ip
