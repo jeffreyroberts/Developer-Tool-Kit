@@ -1,2 +1,2 @@
 *.DS_Store
-share/config.yaml
+var/config/local.yaml
