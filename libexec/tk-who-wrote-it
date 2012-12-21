@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Usage: tk who-wrote-it [file]
+# Summary: Lists contributer's email addresses
+
+set -e
+
+git blame --show-email --line-porcelain $1 | grep "author-mail" | sort | uniq | sed s/author-mail\ //
+
