@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Usage: tk new [command]
+# Summary: Create a new tk command
+# Help: This command is used to open your default editor with a blank new tk command
+
+if [ "$EDITOR" == "" ]
+then
+        EDITOR='nano -w'
+fi
+
+if [ $(echo $1 | wc -m) -gt 0 ]
+then
+	NEW_PATH=$_TK_ROOT/libexec/tk-$1
+	$EDITOR $NEW_PATH
+	chmod a+x $NEW_PATH
+fi

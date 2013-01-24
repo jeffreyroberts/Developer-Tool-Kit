@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Usage: tk edit [command]
+# Summary: Edit a tk script with your default $EDITOR
+# Help: This command is opens your default $EDITOR with the specified command
+
+if [ "$EDITOR" == "" ]
+then
+        EDITOR='nano -w'
+fi
+
+if [ "$1" == "" ]
+then
+	echo "Can not edit root command."
+	exit
+fi
+
+if [ "$1" == "jlr" ]
+then
+	echo "Can not edit root command."
+	exit
+fi
+
+$EDITOR $_TK_ROOT/libexec/tk-$1
+chmod a+x $_TK_ROOT/libexec/tk-$1

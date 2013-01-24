@@ -1,0 +1,4 @@
+#!/bin/bash
+cp $_TK_ROOT/libexec/tk-$1 $_TK_ROOT/libexec/tk-$2
+chmod +x $_TK_ROOT/libexec/tk-$2
+tk edit $2

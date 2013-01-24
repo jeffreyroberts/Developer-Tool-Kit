@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Usage: tk cat [command]
+# Summary: Output a tk command to the screen
+# Help: This command is used for viewing the contents of a tk command script
+
+if [ "$1" == "jlr" ] || [ "$1" == "" ]
+then
+        cat $_TK_ROOT/libexec/tk
+else
+        cat $_TK_ROOT/libexec/tk-$1
+fi
